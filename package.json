@@ -12,7 +12,8 @@
     "npm": "^3.0.0"
   },
   "scripts": {
-    "start": "node src/server/server.js"
+    "start": "node src/server/server.js",
+    "test": "jest"
   },
   "keywords": [
     "mtg",
@@ -78,5 +79,12 @@
     "webpack": "^1.13.1",
     "webpack-dev-server": "^1.14.1",
     "webpack-stream": "^3.2.0"
+  },
+  "jest": {
+    "unmockedModulePathPatterns": [
+      "<rootDir>/node_modules/react/",
+      "<rootDir>/node_modules/react-dom/",
+      "<rootDir>/node_modules/react-addons-test-utils/"
+    ]
   }
 }

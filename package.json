@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "magic the gathering deck analysis tool",
   "main": "src/server/server.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jaybkun/mtgstation.git"
+  },
   "engines": {
     "node": ">=4.2.0",
     "npm": "^3.0.0"

@@ -1,6 +1,6 @@
 const gulp = require('gulp');
 const eslint = require('gulp-eslint');
-const webpack = require('gulp-webpack');
+const webpack = require('webpack-stream');
 const environments = require('gulp-environments');
 const production = environments.production;
 

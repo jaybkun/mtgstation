@@ -6,5 +6,12 @@ MTG Station is an application for analyzing deck composition.
 
 ## Build
 
+To run in development mode
+
     npm install
-    npm run dev
+    gulp
+
+To build for deployment
+
+    npm install
+    gulp dist

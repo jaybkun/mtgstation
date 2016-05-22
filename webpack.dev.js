@@ -3,6 +3,13 @@ const path = require('path');
 const webpack = require('webpack');
 
 // Loaders
+const eslintLoader = {
+  test: /\.js$/,
+  loader: 'eslint',
+  include: path.join(__dirname, 'src/client'),
+  exclude: /node_modules/
+};
+
 const hotLoader = {
   test: /\.js$/,
   loader: 'react-hot',
@@ -45,7 +52,8 @@ module.exports = {
   module: {
     loaders: [
       hotLoader,
-      babelLoader
+      babelLoader,
+      eslintLoader
     ]
   }
 };

@@ -16,10 +16,9 @@ app.set('view engine', 'pug');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
-app.use(favicon);
+app.use(favicon(__dirname + '/public/favicon.ico'));
 
-app.use(express.static(path.resolve(path.join(__dirname, '../client/dist'))));
-
+app.use('/dist/', express.static(path.resolve(path.join(__dirname, '../../dist'))));
 app.use('/', routes);
 
 // catch 404 and forward to error handler

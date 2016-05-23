@@ -112,7 +112,7 @@ function onListening() {
 // will print stacktrace
 const HTTP_SERVER_ERROR_CODE = 500;
 if (app.get('env') === 'development') {
-  app.use(function (err, req, res, next) {
+  app.use(function (err, req, res) {
     res.status(err.status || HTTP_SERVER_ERROR_CODE);
     res.render('error', {
       message: err.message,
@@ -123,7 +123,7 @@ if (app.get('env') === 'development') {
 
 // production error handler
 // no stacktraces leaked to user
-app.use(function (err, req, res, next) {
+app.use(function (err, req, res) {
   res.status(err.status || HTTP_SERVER_ERROR_CODE);
   res.render('error', {
     message: err.message,

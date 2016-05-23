@@ -6,6 +6,7 @@ import LogMonitor from 'redux-devtools-log-monitor';
 import DockMonitor from 'redux-devtools-dock-monitor';
 
 import {routerReducer, routerMiddleware} from 'react-router-redux';
+import * as reducers from '../reducers';
 
 export const DevTools = createDevTools(
   <DockMonitor toggleVisibilityKey='trl-h' changePositionKey='ctrl-q'>
@@ -15,7 +16,8 @@ export const DevTools = createDevTools(
 
 export function configureStore (history, initialState) {
   const reducer = combineReducers({
-    routing: routerReducer
+    routing: routerReducer,
+    reducers
   });
 
   let devTools = [];

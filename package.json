@@ -26,9 +26,12 @@
   "author": "Jay Barra <jay.f.barra@gmail.com>",
   "license": "ISC",
   "dependencies": {
+    "bluebird": "^3.4.0",
     "body-parser": "^1.15.1",
     "express": "^4.13.4",
     "font-awesome": "^4.6.1",
+    "isomorphic-fetch": "^2.2.1",
+    "keymirror": "^0.1.1",
     "lodash": "^4.12.0",
     "mongoose": "^4.4.19",
     "morgan": "^1.7.0",

@@ -38,7 +38,7 @@ gulp.task('webpack-dev-server', () => {
   }).listen(WEBPACK_DEV_SERVER_PORT, 'localhost', (err) => {
     if (err) throw new gutil.PluginError('webpack-dev-server', err);
     // Server listening
-    gutil.log('[webpack-dev-server]', 'http://localhost:3001/webpack-dev-server/');
+    gutil.log('[webpack-dev-server]', 'http://localhost:' + WEBPACK_DEV_SERVER_PORT + '/webpack-dev-server/');
   });
 });
 
@@ -62,5 +62,5 @@ gulp.task('lint', () => {
 });
 
 // Composite tasks
-gulp.task('default', ['webpack-dev-server']);
+gulp.task('default', ['webpack-dev-server', 'open']);
 gulp.task('dist', ['lint', 'webpack']);

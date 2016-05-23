@@ -1,52 +1,38 @@
-import bluebird from 'bluebird';
+// import bluebird from 'bluebird';
 import fetch from 'isomorphic-fetch';
-bluebird.promisifyAll(fetch);
 import keyMirror from 'keymirror';
 
 const DECK_BREW_URI = 'https://deckbrew.com/api/mtg';
 
 export const FETCH_ACTIONS = keyMirror({
-  SEARCH_CARDS: null,
-  RECEIVE_CARDS: null
+  REQUEST_CARDS: null,
+  RECEIVE_CARDS: null,
+  SEARCH_CARDS: null
 });
 
-/**
- * Fetchs the cards
- * @param name - name of the card, fuzzy match is used
- * @returns {{type: null, name: *}}
- */
-export function searchCards(name) {
+function reqeustCards(cardName) {
   return {
-    type: FETCH_ACTIONS.SEARCH_CARDS,
-    name
+    type: FETCH_ACTIONS.REQUEST_CARDS,
+    cardName
   };
 }
 
-/**
- * Fires when cards are returned from the call
- * @param name - value that was searched
- * @param json - json results from deck brew
- * @returns {{type: null, cards: *}}
- */
-export function receiveCards(name, json) {
+function receiveCards(cardName, json) {
   return {
     type: FETCH_ACTIONS.RECEIVE_CARDS,
-    name,
-    cards: json.data.children.map(child => child.name)
+    cardName,
+    cards: json.data.children.map(card => card.name)
   };
 }
 
-/**
- * Performs the fetch
- * @param name - blah
- * @returns {function()}
- */
-function fetchCards(name) {
+export function fetchCards(cardName) {
   return dispatch => {
-    dispatch(searchCards(name));
-    const uri = DECK_BREW_URI + '/cards?name=' + name;
-    return fetch(uri)
+    dispatch(reqeustCards(cardName));
+    const searchURI = DECK_BREW_URI + '/cards?name=' + cardName;
+    return fetch(searchURI)
       .then(response => response.json())
-      .then(json => dispatch(receiveCards(name, json)));
+      .then(json => {
+        dispatch(receiveCards(cardName, json));
+      });
   };
 }

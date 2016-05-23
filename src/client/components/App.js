@@ -47,13 +47,11 @@ class App extends Component {
 
 App.propTypes = {
   children: PropTypes.node.isRequired,
-  searchCards: PropTypes.func.isRequired,
   dispatch: PropTypes.func.isRequired
 };
 
-function mapStateToProps(state) {
-  const {searchCards} = state;
-  return {searchCards};
+function mapStateToProps() {
+  return {};
 }
 
 export default connect(mapStateToProps)(App);

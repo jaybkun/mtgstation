@@ -14,7 +14,10 @@ module.exports = {
   debug: true,
   cache: true,
   entry: {
-    mtgstation: './src/client/app.entry.js'
+    mtgstation: [
+      'babel-polyfill',
+      './src/client/app.entry.js'
+    ]
   },
   output: {
     path: path.resolve(__dirname, '/dist/'),

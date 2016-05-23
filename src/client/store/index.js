@@ -1,5 +1,5 @@
 import React from 'react';
-
+import thunkMiddleware from 'redux-thunk';
 import {createStore, combineReducers, compose, applyMiddleware} from 'redux';
 import {createDevTools} from 'redux-devtools'; // TODO make this conditional
 import LogMonitor from 'redux-devtools-log-monitor';
@@ -30,6 +30,7 @@ export function configureStore (history, initialState) {
     initialState,
     compose(
       applyMiddleware(
+        thunkMiddleware,
         routerMiddleware(history)
       ),
       ...devTools

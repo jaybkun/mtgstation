@@ -28,6 +28,7 @@ module.exports = {
   cache: true,
   entry: {
     mtgstation: [
+      'babel-polyfill',
       'webpack-dev-server/client?http://localhost:3001',
       'webpack/hot/only-dev-server',
       './src/client/app.entry.js'

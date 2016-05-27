@@ -23,6 +23,11 @@ const babelLoader = {
   include: path.join(__dirname, 'src/client')
 };
 
+const cssLoader = {
+  test: /\.css$/,
+  loader: 'style!css'
+};
+
 module.exports = {
   debug: true,
   cache: true,
@@ -54,7 +59,8 @@ module.exports = {
     loaders: [
       hotLoader,
       babelLoader,
-      eslintLoader
+      eslintLoader,
+      cssLoader
     ]
   }
 };

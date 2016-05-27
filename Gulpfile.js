@@ -1,7 +1,6 @@
 const gulp = require('gulp');
 const eslint = require('gulp-eslint');
 const webpackStream = require('webpack-stream');
-const environments = require('gulp-environments');
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
 const gutil = require('gulp-util');
@@ -62,5 +61,5 @@ gulp.task('lint', () => {
 });
 
 // Composite tasks
-gulp.task('default', ['webpack-dev-server', 'open']);
+gulp.task('default', ['webpack-dev-server']);
 gulp.task('dist', ['lint', 'webpack']);

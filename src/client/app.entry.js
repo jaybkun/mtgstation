@@ -10,6 +10,7 @@ import routes from './routes';
 
 const store = configureStore(browserHistory, window.__initialState__);
 const history = syncHistoryWithStore(browserHistory, store);
+import './stylesheets/styles.css';
 
 render(
   <Provider store={store}>

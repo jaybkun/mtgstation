@@ -71,6 +71,9 @@ module.exports = {
   plugins: [
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.ProvidePlugin({
+      _: 'lodash'
+    }),
     new webpack.HotModuleReplacementPlugin()
   ],
   module: {

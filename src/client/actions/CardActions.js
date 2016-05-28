@@ -6,10 +6,10 @@ export const CardActions = keymirror({
   REMOVE_CARD: null
 });
 
-export function addCard = (card, deck) => {
+export const addCard = (card, deck) => {
   return {
     type: CardActions.ADD_CARD,
     card: card,
     deck: deck
-  }
+  };
 };

@@ -1,7 +1,6 @@
 /* eslint-disable */
 const path = require('path');
 const webpack = require('webpack');
-import {babelLoader,eslintLoader,cssLoader,imageLoader} from './webpack.config.loaders';
 
 module.exports = {
   debug: true,
@@ -20,6 +19,9 @@ module.exports = {
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.optimize.UglifyJsPlugin(),
+    new webpack.ProvidePlugin({
+      _: 'lodash'
+    }),
     new webpack.DefinePlugin({
       'process.env': {
         'NODE_ENV': '"production"'

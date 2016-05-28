@@ -1,17 +1,15 @@
-import React from 'react';
-import {Route, IndexRoute} from 'react-router';
-import App from '../components/App';
+import React, {Component, PropTypes} from 'react'
+import {Route, IndexRoute, Link} from 'react-router'
 
-const Home = () => (<div>Home</div>);
-const Foo = () => (<div>Foo</div>);
-const Bar = () => (<div>Bar</div>);
+import App from '../components/App';
+import Home from '../components/Home';
+import Cards from '../components/Cards';
 
 const routes = (
-  <Route path='/' component={App}>
-    <IndexRoute component={Home} />
-    <Route path='/foo' component={Foo} />
-    <Route path='/bar' component={Bar} />
-  </Route>
+    <Route path='/' component={App}>
+      <IndexRoute component={Home}/>
+      <Route path='/cards' component={Cards} />
+    </Route>
 );
 
-export default routes;
+module.exports = routes;

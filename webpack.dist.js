@@ -1,14 +1,7 @@
 /* eslint-disable */
 const path = require('path');
 const webpack = require('webpack');
-
-// Loaders
-const babelLoader = {
-  test: /\.js$/,
-  loader: 'babel',
-  query: {presets: ['react', 'es2015']},
-  include: path.join(__dirname, 'src/client')
-};
+import {babelLoader,eslintLoader,cssLoader,imageLoader} from './webpack.config.loaders';
 
 module.exports = {
   debug: true,
@@ -35,8 +28,10 @@ module.exports = {
   ],
   module: {
     loaders: [
-      babelLoader
+      babelLoader,
+      eslintLoader,
+      cssLoader,
+      imageLoader
     ]
   }
 };
-

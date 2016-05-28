@@ -2,39 +2,57 @@
 const path = require('path');
 const webpack = require('webpack');
 
-// Loaders
-const eslintLoader = {
-  test: /\.js$/,
-  loader: 'eslint',
-  include: path.join(__dirname, 'src/client'),
-  exclude: /node_modules/
-};
-
 const hotLoader = {
   test: /\.js$/,
   loader: 'react-hot',
-  include: path.join(__dirname, 'src/client')
+  include: path.join(__dirname, 'src')
+};
+
+const eslintLoader = {
+  test: /\.js$/,
+  loader: 'eslint',
+  include: path.join(__dirname, 'src')
 };
 
 const babelLoader = {
   test: /\.js$/,
   loader: 'babel',
-  query: {presets: ['react', 'es2015']},
-  include: path.join(__dirname, 'src/client')
+  include: path.join(__dirname, 'src'),
+  query: {
+    presets: ['es2015', 'react']
+  }
+};
+
+const imageLoader = {
+  test: /\.(jpe?g|png|gif|svg)$/i,
+  loaders: [
+    'file?hash=sha512&digest=hex&name=[hash].[ext]',
+    'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false'
+  ]
+};
+
+const woffLoader = {
+  test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+  loader: "url-loader?limit=10000&minetype=application/font-woff"
+};
+
+const fontLoader = {
+  test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+  loader: "file-loader"
 };
 
 const cssLoader = {
   test: /\.css$/,
-  loader: 'style!css'
+  loaders: ['style', 'css']
 };
 
+
 module.exports = {
-  debug: true,
-  cache: true,
+  devtool: 'eval',
   entry: {
     mtgstation: [
       'babel-polyfill',
-      'webpack-dev-server/client?http://localhost:3001',
+      'webpack-dev-server/client?http://0.0.0.0:3001',
       'webpack/hot/only-dev-server',
       './src/client/app.entry.js'
     ]
@@ -52,7 +70,7 @@ module.exports = {
   },
   plugins: [
     new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin()
   ],
   module: {
@@ -60,8 +78,10 @@ module.exports = {
       hotLoader,
       babelLoader,
       eslintLoader,
-      cssLoader
+      cssLoader,
+      imageLoader,
+      woffLoader,
+      fontLoader
     ]
   }
 };
-

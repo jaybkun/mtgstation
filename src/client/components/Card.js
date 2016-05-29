@@ -1,60 +1,68 @@
-import React,{Component,PropTypes} from 'react';
+import React, {Component, PropTypes} from 'react';
+import assign from 'object-assign';
 
 class Card extends Component {
   constructor(props) {
     super(props);
+
+    if (!props.card.name || !props.card) {
+      this.state = {
+        card: {
+          name: '',
+          cost: '',
+          cmc: '',
+          supertypes: [],
+          types: [],
+          subtypes: [],
+          colors: [],
+          text: '',
+          power: '',
+          toughness: ''
+        }
+      };
+    } else {
+      this.state = assign({}, props.card);
+    }
+    // TODO set default props correctly and don't use state at all
+  }
+
+  componentWillReceiveProps(props) {
+    if (props.card) {
+      this.setState({card: assign({}, props.card)});
+    }
   }
 
   render() {
     return (
       <div>
-          <div>Name: {this.props.card.name}</div>
-          <div>Cost: {this.props.card.cost}</div>
-          <div>Type: {this.props.card.types.map(type => {
-            return <span>{type} </span>})}
-          </div>
-          <div>Colors: {this.props.card.colors.map(color => {
-            return <span>{color} </span>})}
-          </div>
-          <div>Text: {this.props.card.text}</div>
-          <div>Power: {this.props.card.power}</div>
-          <div>Toughness: {this.props.card.toughness}</div>
+        <div>Name: {this.state.card.name}</div>
+        <div>Cost: {this.state.card.cost}</div>
+        <div>Type: {this.state.card.types.map(type => {
+          return <span>{type} </span>
+        })}
+        </div>
+        <div>Colors: {this.state.card.colors.map(color => {
+          return <span>{color} </span>
+        })}
+        </div>
+        <div>Text: {this.state.card.text}</div>
+        {this.state.card.power !== '' ? <div>Power: {this.state.card.power}</div> : null}
+        {this.state.card.toughness !== '' ? <div>Toughness: {this.state.card.toughness}</div> : null}
 
-          {JSON.stringify(this.props.card)}
+        {this.state.card.editions ? <div>
+          Editions:
+          {this.state.card.editions.map(edition => {
+            return <div style={{display:'block', float:'left'}}>
+              <div style={{textAlign:'center'}}>{edition.set}</div>
+              <img src={edition.image_url}/>
+            </div>;
+          })}
+
+        </div> : null
+        }
       </div>
     );
   }
 }
-
-Card.propTypes = {
-  card: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    cost: PropTypes.string.isRequired,
-    cmc: PropTypes.string.isRequired,
-    supertypes: PropTypes.arrayOf(PropTypes.string.isRequired),
-    types: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-    subtypes: PropTypes.arrayOf(PropTypes.string),
-    colors: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-    text: PropTypes.string.isRequired,
-    power: PropTypes.string,
-    toughness: PropTypes.string
-  })
-};
-
-
-Card.defaultProps = {
-  card: {
-    name: '',
-    cost: '',
-    cmc: '',
-    supertypes: [],
-    types: [],
-    subtypes: [],
-    colors: [],
-    text: '',
-    power: '',
-    toughness: ''
-  }
-};
 
 export default Card;

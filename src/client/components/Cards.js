@@ -21,14 +21,14 @@ class Cards extends Component {
     this.viewCard = this.viewCard.bind(this);
   }
 
-  updateCardSearch(ev) {
+  updateCardSearch(ev, value) {
     const {dispatch} = this.props;
-    this.setState({search: ev.target.value});
-    if (ev.target.value === '') {
+    this.setState({search: value});
+    if (value === '') {
       this.setState({selectedCard: ''});
       dispatch(clearCards());
     } else {
-      dispatch(fetchCards(ev.target.value));
+      dispatch(fetchCards(value));
     }
   }
 

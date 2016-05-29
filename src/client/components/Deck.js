@@ -8,7 +8,7 @@ class Deck extends Component {
   render() {
     return (
       <div>
-        <h3>Deck</h3>
+        <h3>{this.props.title}</h3>
         <div>
           Cards
         </div>
@@ -22,7 +22,7 @@ class Deck extends Component {
 
 Deck.propTypes = {
   deck: PropTypes.shape({
-    name: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
     cards: PropTypes.array.isRequired
   }).isRequired
@@ -30,7 +30,7 @@ Deck.propTypes = {
 
 Deck.defaultProps = {
   deck: {
-    name: '',
+    title: '',
     id: '',
     cards: []
   }

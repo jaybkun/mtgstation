@@ -6,6 +6,8 @@ import Home from '../components/Home';
 import Cards from '../components/Cards';
 import Decks from '../components/Decks';
 import Deck from '../components/Deck';
+
+import About from '../components/About';
 import NotFound from '../components/NotFound';
 
 const routes = (
@@ -15,6 +17,7 @@ const routes = (
       <Route path='/decks' component={Decks}>
         <Route path='/decks/:deck' component={Deck} />
       </Route>
+      <Route path='/about' component={About}/>
       <Route path='*' component={NotFound} />
     </Route>
 );

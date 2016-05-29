@@ -8,7 +8,7 @@ class Home extends Component {
   render() {
     return (
       <div>
-        Home
+        Magic the Gathering Deck Station
       </div>
     );
   }

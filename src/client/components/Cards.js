@@ -2,6 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import {TextField, RefreshIndicator} from 'material-ui';
 import {fetchCards, clearCards} from '../actions/CardActions';
 import {connect} from 'react-redux';
+import Card from './Card';
 
 const style = {
   refresh: {
@@ -14,7 +15,7 @@ class Cards extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {search: '', selectedCard: ''};
+    this.state = {search: '', selectedCard: {}};
     this.updateCardSearch = this.updateCardSearch.bind(this);
     this.viewCard = this.viewCard.bind(this);
   }
@@ -55,9 +56,7 @@ class Cards extends Component {
             {noResultsMsg}
           </ul>
         </div>
-        <div style={{float:'right', width:'75%'}}>
-          {JSON.stringify(this.state.selectedCard)}
-        </div>
+        <Card style={{float:'right', width:'75%'}} card={this.state.selectedCard}/>
       </div>
     );
   }

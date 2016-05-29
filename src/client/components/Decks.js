@@ -1,5 +1,5 @@
 import React,{Component,PropTypes} from 'react';
-import {Menu,MenuItem,Divider,Paper} from 'material-ui';
+import {List,ListItem,Divider,Paper,Subheader,Menu,MenuItem} from 'material-ui';
 
 class Decks extends Component {
   constructor(props) {
@@ -7,7 +7,6 @@ class Decks extends Component {
 
     this.handleNav = this.handleNav.bind(this);
   }
-
 
   handleNav(deck) {
     this.context.router.push(deck);
@@ -19,9 +18,13 @@ class Decks extends Component {
         <div style={{float:'left'}}>
           <Paper style={{display:'inline-block', margin: '16px 32px 16px 0'}}>
             <Menu>
-              <MenuItem primaryText="Build a Deck"/>
-              <Divider/>
-              <MenuItem onClick={this.handleNav.bind(this, '/decks/deck1')} primaryText="Deck 1"/>
+              <MenuItem onClick={this.handleNav.bind(this, '/decks/deckBuilder')} primaryText="Build a Deck"/>
+              <MenuItem onClick={this.handleNav.bind(this, '/decks')} primaryText="My Decks"/>
+              <Divider inset={true}/>
+              <List>
+                <Subheader inset={true}>My Decks</Subheader>
+                <ListItem onClick={this.handleNav.bind(this, '/decks/deck1')} primaryText="Deck 1"/>
+              </List>
             </Menu>
           </Paper>
         </div>

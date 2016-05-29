@@ -1,4 +1,4 @@
-import React,{Component} from 'react';
+import React,{Component,PropTypes} from 'react';
 
 class Deck extends Component {
   constructor(props) {
@@ -8,10 +8,32 @@ class Deck extends Component {
   render() {
     return (
       <div>
-        Deck
+        <h3>Deck</h3>
+        <div>
+          Cards
+        </div>
+        <div>
+          Analysis
+        </div>
       </div>
     )
   }
 }
+
+Deck.propTypes = {
+  deck: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+    cards: PropTypes.array.isRequired
+  }).isRequired
+};
+
+Deck.defaultProps = {
+  deck: {
+    name: '',
+    id: '',
+    cards: []
+  }
+};
 
 export default Deck;

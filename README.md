@@ -15,4 +15,4 @@ To run in development mode
 To build for deployment
 
     npm install
-    npm run dist
+    npm run prod

@@ -20,7 +20,14 @@ app.use(favicon(path.join(__dirname, '../client/favicon.ico')));
 
 app.use('/dist/', express.static(path.join(__dirname, '../../dist/')));
 app.use('/images/', express.static(path.join(__dirname, '../client/images')));
-app.use('/', routes);
+app.use('/api', function(req, res, next) {
+  // TODO handle api calls
+  console.log(req.url);
+  next();
+});
+app.get('*', function(req, res) {
+  res.render('index');
+});
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

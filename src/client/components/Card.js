@@ -1,68 +1,99 @@
 import React, {Component, PropTypes} from 'react';
-import assign from 'object-assign';
-
 class Card extends Component {
   constructor(props) {
     super(props);
 
-    if (!props.card.name || !props.card) {
-      this.state = {
-        card: {
-          name: '',
-          cost: '',
-          cmc: '',
-          supertypes: [],
-          types: [],
-          subtypes: [],
-          colors: [],
-          text: '',
-          power: '',
-          toughness: ''
-        }
-      };
-    } else {
-      this.state = assign({}, props.card);
-    }
-    // TODO set default props correctly and don't use state at all
+    this.replaceCost = this.replaceCost.bind(this);
   }
 
-  componentWillReceiveProps(props) {
-    if (props.card) {
-      this.setState({card: assign({}, props.card)});
+  replaceCost(text) {
+    const height = 24;
+    if (!text) {
+      return null;
     }
+
+    const whiteRx = new RegExp(/{w}/ig);
+    text = text.replace(whiteRx, '<img height=\'' + height + '\' src=\'../images/white_mana.png\'/>');
+
+    const blueRx = new RegExp(/{u}/ig);
+    text = text.replace(blueRx, '<img height=\'' + height + '\' src=\'../images/blue_mana.png\'/>');
+
+    const blackRx = new RegExp(/{b}/ig);
+    text = text.replace(blackRx, '<img height=\'' + height + '\' src=\'../images/black_mana.png\'/>');
+
+    const redRx = new RegExp(/{r}/ig);
+    text = text.replace(redRx, '<img height=\'' + height + '\' src=\'../images/red_mana.png\'/>');
+    
+    const greenRx = new RegExp(/{g}/ig);
+    text = text.replace(greenRx, '<img height=\'' + height + '\' src=\'../images/green_mana.png\'/>');
+
+    const devoidRx = new RegExp(/{d}/ig);
+    text = text.replace(devoidRx, '<img height=\'' + height + '\' src=\'../images/devoid_mana.png\'/>');
+
+    const xmanaRx = new RegExp(/{x}/ig);
+    text = text.replace(xmanaRx, '<img height=\'' + height + '\' src=\'../images/x_mana.png\'/>');
+
+    const tapRx = new RegExp(/{t}/ig);
+    text = text.replace(tapRx, '<img height=\'' + height + '\' src=\'../images/tap.png\'/>');
+
+    const colorlessRx = new RegExp(/{(\d+)}/);
+    if (colorlessRx.test(text)) {
+      let colorlessCost = text.match(colorlessRx);
+      text = text.replace(colorlessRx, '<img height=\'' + height + '\' src=\'../images/' + colorlessCost[1] + '_mana.png\'/>');
+    }
+
+    return {__html: text};
   }
 
   render() {
     return (
       <div>
-        <div>Name: {this.state.card.name}</div>
-        <div>Cost: {this.state.card.cost}</div>
-        <div>Type: {this.state.card.types.map(type => {
+        <div>Name: {this.props.card.name}</div>
+        <div>Cost: <div dangerouslySetInnerHTML={this.replaceCost(this.props.card.cost)}/></div>
+        <div>CMC: {this.props.card.cmc}</div>
+
+        <div>Type: {this.props.card.types.map(type => {
           return <span>{type} </span>
         })}
         </div>
-        <div>Colors: {this.state.card.colors.map(color => {
+
+        {this.props.card.colors ? <div>Colors: {this.props.card.colors.map(color => {
           return <span>{color} </span>
         })}
-        </div>
-        <div>Text: {this.state.card.text}</div>
-        {this.state.card.power !== '' ? <div>Power: {this.state.card.power}</div> : null}
-        {this.state.card.toughness !== '' ? <div>Toughness: {this.state.card.toughness}</div> : null}
+        </div> : <div>Colors: None</div>}
 
-        {this.state.card.editions ? <div>
+        <div>Text: <div dangerouslySetInnerHTML={this.replaceCost(this.props.card.text)}/></div>
+
+        {this.props.card.power ? <div>Power: {this.props.card.power}</div> : null}
+        {this.props.card.toughness ? <div>Toughness: {this.props.card.toughness}</div> : null}
+
+        {this.props.card.editions ? <div>
           Editions:
-          {this.state.card.editions.map(edition => {
-            return <div style={{display:'block', float:'left'}}>
+          <br />
+          {this.props.card.editions.map((edition, i)=> {
+            return <div key={edition.multiverse_id + '_' + i} style={{display:'block', float:'left'}}>
               <div style={{textAlign:'center'}}>{edition.set}</div>
               <img src={edition.image_url}/>
             </div>;
           })}
-
-        </div> : null
-        }
+        </div> : null}
       </div>
     );
   }
 }
+
+Card.propTypes = {
+  card: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    types: PropTypes.array
+  })
+};
+
+Card.defaultProps = {
+  card: {
+    name: '',
+    types: []
+  }
+};
 
 export default Card;

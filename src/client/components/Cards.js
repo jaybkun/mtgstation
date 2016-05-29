@@ -15,7 +15,8 @@ class Cards extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {search: '', selectedCard: {}};
+    this.state = {search: '', selectedCard: undefined};
+
     this.updateCardSearch = this.updateCardSearch.bind(this);
     this.viewCard = this.viewCard.bind(this);
   }
@@ -35,11 +36,15 @@ class Cards extends Component {
   }
 
   render() {
-
     let noResultsMsg = null;
     if (this.props.cards.length === 0 &&
       this.state.search !== '' && !this.props.isFetching) {
       noResultsMsg = (<li>No cards match your search</li>);
+    }
+
+    let cardDiv = null;
+    if (this.state.selectedCard !== {}) {
+      cardDiv = <Card card={this.state.selectedCard}/>
     }
 
     return (
@@ -51,7 +56,11 @@ class Cards extends Component {
           />
           <ul style={{listStyle:'none'}}>
             {this.props.cards.map(card => {
-              return <li key={card.name} onClick={this.viewCard.bind(this, card)}>{card.name}</li>;
+              return <li
+                key={card.name}
+                onClick={this.viewCard.bind(this, card)}
+                style={{cursor:'pointer'}}
+              >{card.name}</li>;
             })}
             {noResultsMsg}
           </ul>

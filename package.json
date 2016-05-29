@@ -16,7 +16,7 @@
     "start": "node dev-server.js",
     "test": "jest",
     "prebuild": "npm run clean",
-    "build": "cross-env NODE_ENV=production webpack --config webpack.dist --progress --colors",
+    "build": "cross-env NODE_ENV=production webpack -d --config webpack.dist --progress --colors",
     "prod": "npm run build & node src/server/server.js"
   },
   "keywords": [

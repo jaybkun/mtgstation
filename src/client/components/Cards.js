@@ -15,7 +15,7 @@ class Cards extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {search: '', selectedCard: undefined};
+    this.state = {search: '', selectedCard: ''};
 
     this.updateCardSearch = this.updateCardSearch.bind(this);
     this.viewCard = this.viewCard.bind(this);
@@ -25,6 +25,7 @@ class Cards extends Component {
     const {dispatch} = this.props;
     this.setState({search: ev.target.value});
     if (ev.target.value === '') {
+      this.setState({selectedCard: ''});
       dispatch(clearCards());
     } else {
       dispatch(fetchCards(ev.target.value));
@@ -66,7 +67,7 @@ class Cards extends Component {
           </ul>
         </div>
         <div style={{float:'right', width:'75%'}}>
-          <Card card={this.state.selectedCard}/>
+          {this.state.search !== '' && this.state.selectedCard !== '' ? <Card card={this.state.selectedCard}/> : null}
         </div>
       </div>
     );

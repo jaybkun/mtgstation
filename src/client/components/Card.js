@@ -65,23 +65,23 @@ class Card extends Component {
   render() {
     let powerToughness = null;
     if (this.props.card.power && this.props.card.toughness) {
-      powerToughness = <div>Power/Toughness {this.props.card.power} / {this.props.card.toughness}</div>
+      powerToughness = <div>Power/Toughness: {this.props.card.power} / {this.props.card.toughness}</div>
     }
 
     let supertypes = null;
     if (this.props.card.supertypes) {
       supertypes = <div>Supertypes: {this.props.card.supertypes.map(type => {
-        return <span>{type} </span>
+        return <span key={type}>{type} </span>
       })}</div>
     }
     let types = <div>Type: {this.props.card.types.map(type => {
-      return <span>{type} </span>
+      return <span key={type}>{type} </span>
     })}</div>;
 
     let subtypes = null;
     if (this.props.card.subtypes) {
       subtypes = <div>Subtypes: {this.props.card.subtypes.map(type => {
-        return <span>{type} </span>
+        return <span key={type}>{type} </span>
       })}</div>
     }
 
@@ -104,7 +104,7 @@ class Card extends Component {
           {subtypes}
 
           {this.props.card.colors ? <div>Colors: {this.props.card.colors.map(color => {
-            return <span>{color} </span>
+            return <span key={color}>{color} </span>
           })}
           </div> : <div>Colors: None</div>}
 
@@ -121,7 +121,7 @@ class Card extends Component {
           <br/>
           <SelectField value={this.state.selectedEdition} onChange={this.handleEditionChange}>
             {this.props.card.editions.map((edition, i)=> {
-              return <MenuItem key={edition.set_id} value={i} primaryText={edition.set}/>
+              return <MenuItem key={edition.set_id + '_' + i} value={i} primaryText={edition.set}/>
             })}
           </SelectField>
         </div>

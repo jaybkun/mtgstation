@@ -44,7 +44,7 @@ class Cards extends Component {
 
     return (
       <div>
-        <div style={{float:'left', width: '25%'}}>
+        <div style={{float:'left', width: '25%', height:'100%'}}>
           <TextField
             id='card-search' hintText='Search Cards Here...'
             value={this.state.search} onChange={this.updateCardSearch}
@@ -56,7 +56,9 @@ class Cards extends Component {
             {noResultsMsg}
           </ul>
         </div>
-        <Card style={{float:'right', width:'75%'}} card={this.state.selectedCard}/>
+        <div style={{float:'right', width:'75%'}}>
+          <Card card={this.state.selectedCard}/>
+        </div>
       </div>
     );
   }

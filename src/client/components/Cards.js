@@ -1,10 +1,27 @@
 import React, {Component, PropTypes} from 'react';
 import {TextField, RefreshIndicator, RaisedButton} from 'material-ui';
 import ClearIcon from 'material-ui/svg-icons/content/clear';
+import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
+import {GridList, GridTile} from 'material-ui/GridList';
 import {List, ListItem} from 'material-ui';
 import {fetchCards, clearCards} from '../actions/CardActions';
 import {connect} from 'react-redux';
-import Card from './Card';
+import MtgCard from './Card';
+import {replaceCost} from '../utils/CostConverter';
+
+const styles = {
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around'
+  },
+  gridList: {
+    width: '75%',
+    height: '80%',
+    overflowY: 'auto',
+    marginBottom: 24
+  }
+};
 
 class Cards extends Component {
   constructor(props) {
@@ -12,18 +29,13 @@ class Cards extends Component {
 
     this.state = {
       search: '',
-      selectedCard: ''
+      selectedCard: undefined,
+      expandResults: false
     };
 
     this.updateCardSearch = this.updateCardSearch.bind(this);
     this.viewCard = this.viewCard.bind(this);
-    this.clearSearch = this.clearSearch.bind(this);
-  }
-
-  clearSearch() {
-    const {dispatch} = this.props;
-    dispatch(clearCards());
-    this.setState({search: ''});
+    this.hidCard = this.hideCard.bind(this);
   }
 
   updateCardSearch(ev, value) {
@@ -38,7 +50,11 @@ class Cards extends Component {
   }
 
   viewCard(card) {
-    this.setState({selectedCard: card});
+    this.setState({selectedCard: card, expandResults: false});
+  }
+
+  hideCard() {
+    this.setState({selectedCard: undefined});
   }
 
   render() {
@@ -56,24 +72,29 @@ class Cards extends Component {
     return (
       <div style={{width: '100%'}}>
         <div style={{margin: '16px 32px'}}>
-          <div>
-            <TextField id='card-search' hintText='Search Cards Here...' fullWidth={true}
-                       value={this.state.search} onChange={this.updateCardSearch}/>
-            <RaisedButton
-              onTapTouch={this.clearSearch}
-              icon={<ClearIcon/>} />
-          </div>
-          <List>
-            {this.props.cards.map(card => {
-              return <ListItem
-                key={card.name}
-                onTouchTap={this.viewCard.bind(this, card)}
-                style={{cursor:'pointer'}}
-                primaryText={card.name}/>
-            })}
-          </List>
-          <div style={{display:'flex', margin: '8px 16px 8px 0'}}>
-            {this.state.selectedCard.name ? <Card card={this.state.selectedCard}/> : null}
+          <TextField id='card-search' hintText='Search Cards Here...' fullWidth={true}
+                     value={this.state.search} onChange={this.updateCardSearch}/>
+          <Card expanded={this.state.expandResults} expandable={true}>
+            <CardHeader
+              onTouchTap={() => this.setState({expandResults: !this.state.expandResults})}
+              title={'Results: ' + this.props.cards.length}
+              showExpandableButton={true}/>
+            <CardText expandable={true}>
+              <GridList cellHeight={200} style={styles.gridList} cols={3}>
+                {this.props.cards.map(card => {
+                  return (
+                    <GridTile
+                      key={card.id}
+                      title={card.name}
+                      onTouchTap={this.viewCard.bind(this, card)}>
+                      <img src={card.editions[0].image_url}/>
+                    </GridTile>)
+                })}
+              </GridList>
+            </CardText>
+          </Card>
+          <div style={{margin:'16px 0'}}>
+            {this.state.selectedCard !== {} ? <MtgCard card={this.state.selectedCard}/> : null}
           </div>
         </div>
       </div>

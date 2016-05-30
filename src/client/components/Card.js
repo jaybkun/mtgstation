@@ -44,44 +44,48 @@ class Card extends Component {
     }
 
     return (
-      <div>
-        <div style={{float:'left', marginRight:'10px'}}>
-          {this.props.card.editions ? <img src={this.props.card.editions[this.state.selectedEdition].image_url}/> : null }
+      <div style={{width:'100%'}}>
+        <div style={{float:'left'}}>
+          <div style={{display:'inline-block'}}>
+            {this.props.card.editions ?
+              <img src={this.props.card.editions[this.state.selectedEdition].image_url}/> : null}
+          </div>
+          <div style={{display: 'block'}}>
+            <SelectField value={this.state.selectedEdition} onChange={this.handleEditionChange}>
+              {this.props.card.editions.map((edition, i)=> {
+                return <MenuItem key={edition.set_id + '_' + i} value={i} primaryText={edition.set}/>
+              })}
+            </SelectField>
+          </div>
         </div>
 
-        <div style={{width: '50%', float:'left'}}>
-          <div style={{display:'inline-block'}}>
-            <div style={{float:'left', marginRight: '10px'}}>{this.props.card.name}</div>
-            <div style={{float:'left'}} dangerouslySetInnerHTML={replaceCost(this.props.card.cost)}/>
-            <div style={{float:'right'}}>CMC: {this.props.card.cmc}</div>
-          </div>
-          <hr/>
+        <div style={{display:'flex'}}>
+          <div>
+            <div style={{display:'flex'}}>
+              <div style={{float:'left', margin: '0 16px 0 0'}}>{this.props.card.name}</div>
+              <div style={{float:'left', margin: '0 16px 0 0'}} dangerouslySetInnerHTML={replaceCost(this.props.card.cost)}/>
+            </div>
+            <div>
+              {supertypes}
+              {types}
+              {subtypes}
 
-          {supertypes}
-          {types}
-          {subtypes}
+              {this.props.card.colors ? <div>Colors: {this.props.card.colors.map(color => {
+                return <span key={color}>{color} </span>
+              })}
+              </div> : <div>Colors: None</div>}
+            </div>
 
-          {this.props.card.colors ? <div>Colors: {this.props.card.colors.map(color => {
-            return <span key={color}>{color} </span>
-          })}
-          </div> : <div>Colors: None</div>}
-
-          <div style={{boxShadow:'1px 1px 3px #555 inset',padding:'3px'}}>
-            <div dangerouslySetInnerHTML={replaceCost(this.props.card.text)}/>
+            <div style={{boxShadow:'1px 1px 3px #555 inset',padding:'3px'}}>
+              <div dangerouslySetInnerHTML={replaceCost(this.props.card.text)}/>
+              <br/>
+              {this.props.card.editions ? <div><span
+                style={{fontStyle:'italic'}}>{this.props.card.editions[this.state.selectedEdition].flavor}</span>
+              </div> : null}
+            </div>
             <br/>
-            {this.props.card.editions ? <div><span style={{fontStyle:'italic'}}>{this.props.card.editions[this.state.selectedEdition].flavor}</span></div> : null}
+            {powerToughness}
           </div>
-          <br/>
-
-          <br/>
-          {powerToughness}
-
-          <br/>
-          <SelectField value={this.state.selectedEdition} onChange={this.handleEditionChange}>
-            {this.props.card.editions.map((edition, i)=> {
-              return <MenuItem key={edition.set_id + '_' + i} value={i} primaryText={edition.set}/>
-            })}
-          </SelectField>
         </div>
       </div>
     );

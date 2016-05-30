@@ -28,7 +28,7 @@ class Decks extends Component {
             </Menu>
           </Paper>
         </div>
-        <div style={{float:'left'}}>
+        <div style={{float:'right'}}>
           {this.props.children}
         </div>
       </div>

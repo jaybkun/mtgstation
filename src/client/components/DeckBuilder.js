@@ -27,6 +27,7 @@ class DeckBuilder extends Component {
     this.addCard = this.addCard.bind(this);
     this.removeSelected = this.removeSelected.bind(this);
     this.handleRequestClose = this.handleRequestClose.bind(this);
+    this.handleRowSelect = this.handleRowSelect.bind(this);
   }
 
   updateCardSearch(ev, value) {
@@ -46,21 +47,39 @@ class DeckBuilder extends Component {
     dispatch(clearCards());
   }
 
+  handleRowSelect(rows) {
+    window.console.debug('firing', rows);
+    let newDeck = [];
+    if (rows === 'all' || rows === 'none') {
+      newDeck = this.state.deckCards.map(card => {
+        card.selected = (rows === 'all');
+        return card;
+      });
+    } else {
+      newDeck = _.map(this.state.deckCards, ((card, index) => {
+        card.selected = false;
+        return card;
+      }));
+    }
+    this.setState({deckCards: newDeck});
+  };
+
   addCard(card) {
+    let newCard = _.cloneDeep(card);
     let isBasicLand = false;
-    card.selected = false;
+    newCard.selected = true;
 
     // Check if basic land
-    if (card.supertypes) {
-      if (_.includes(card.supertypes, 'basic') && _.includes(card.types, 'land')) {
+    if (newCard.supertypes) {
+      if (_.includes(newCard.supertypes, 'basic') && _.includes(newCard.types, 'land')) {
         isBasicLand = true;
       }
     }
 
     if (!isBasicLand) {
-      let count = _.filter(this.state.deckCards, {id: card.id}).length;
+      let count = _.filter(this.state.deckCards, {id: newCard.id}).length;
       if (count < 4) {
-        this.setState({deckCards: [...this.state.deckCards, card]});
+        this.setState({deckCards: [...this.state.deckCards, newCard]});
       } else {
         this.setState({
           snackbarOpen: true,
@@ -68,7 +87,7 @@ class DeckBuilder extends Component {
         })
       }
     } else {
-      this.setState({deckCards: [...this.state.deckCards, card]});
+      this.setState({deckCards: [...this.state.deckCards, newCard]});
     }
   }
 
@@ -119,7 +138,10 @@ class DeckBuilder extends Component {
               })}
             </List>}
         </div>
-        <Table multiSelectable={true} seletable={true} fixedHeader={true}>
+        <Table multiSelectable={true}
+               selectable={true}
+               fixedHeader={true}
+               onRowSelection={this.handleRowSelect}>
           <TableHeader>
             <TableRow>
               <TableHeaderColumn>Name</TableHeaderColumn>
@@ -130,7 +152,7 @@ class DeckBuilder extends Component {
               <TableHeaderColumn>P/T</TableHeaderColumn>
             </TableRow>
           </TableHeader>
-          <TableBody>
+          <TableBody showRowHover={true}>
             {this.state.deckCards.map((card, index) => {
               return (<TableRow key={index} selected={card.selected}>
                 <TableRowColumn>{card.name}</TableRowColumn>

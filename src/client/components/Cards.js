@@ -40,7 +40,7 @@ class Cards extends Component {
 
   updateCardSearch(ev, value) {
     const {dispatch} = this.props;
-    this.setState({search: value});
+    this.setState({search: value, expandResults: true});
     if (value === '') {
       this.setState({selectedCard: ''});
       dispatch(clearCards());

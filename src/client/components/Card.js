@@ -95,7 +95,7 @@ Card.propTypes = {
     types: PropTypes.array.isRequired,
     subtypes: PropTypes.array,
     colors: PropTypes.array,
-    cmc: PropTypes.string.isRequired,
+    cmc: PropTypes.number.isRequired,
     cost: PropTypes.string,
     text: PropTypes.string,
     editions: PropTypes.arrayOf(PropTypes.shape({
@@ -115,7 +115,7 @@ Card.defaultProps = {
     types: [],
     subtypes: [],
     colors: [],
-    cmc: '',
+    cmc: 0,
     cost: '',
     text: '',
     editions: [{

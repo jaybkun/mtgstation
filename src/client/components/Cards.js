@@ -1,24 +1,29 @@
 import React, {Component, PropTypes} from 'react';
-import {TextField, RefreshIndicator} from 'material-ui';
+import {TextField, RefreshIndicator, RaisedButton} from 'material-ui';
+import ClearIcon from 'material-ui/svg-icons/content/clear';
+import {List, ListItem} from 'material-ui';
 import {fetchCards, clearCards} from '../actions/CardActions';
 import {connect} from 'react-redux';
 import Card from './Card';
-
-const style = {
-  refresh: {
-    display: 'block',
-    position: 'relative'
-  }
-};
 
 class Cards extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {search: '', selectedCard: ''};
+    this.state = {
+      search: '',
+      selectedCard: ''
+    };
 
     this.updateCardSearch = this.updateCardSearch.bind(this);
     this.viewCard = this.viewCard.bind(this);
+    this.clearSearch = this.clearSearch.bind(this);
+  }
+
+  clearSearch() {
+    const {dispatch} = this.props;
+    dispatch(clearCards());
+    this.setState({search: ''});
   }
 
   updateCardSearch(ev, value) {
@@ -40,7 +45,7 @@ class Cards extends Component {
     let noResultsMsg = null;
     if (this.props.cards.length === 0 &&
       this.state.search !== '' && !this.props.isFetching) {
-      noResultsMsg = (<li>No cards match your search</li>);
+      noResultsMsg = <ListItem primaryText='No cards match your search'/>
     }
 
     let cardDiv = null;
@@ -49,25 +54,27 @@ class Cards extends Component {
     }
 
     return (
-      <div>
-        <div style={{float:'left', width: '25%', height:'100%'}}>
-          <TextField
-            id='card-search' hintText='Search Cards Here...'
-            value={this.state.search} onChange={this.updateCardSearch}
-          />
-          <ul style={{listStyle:'none'}}>
+      <div style={{width: '100%'}}>
+        <div style={{margin: '16px 32px'}}>
+          <div>
+            <TextField id='card-search' hintText='Search Cards Here...' fullWidth={true}
+                       value={this.state.search} onChange={this.updateCardSearch}/>
+            <RaisedButton
+              onTapTouch={this.clearSearch}
+              icon={<ClearIcon/>} />
+          </div>
+          <List>
             {this.props.cards.map(card => {
-              return <li
+              return <ListItem
                 key={card.name}
-                onClick={this.viewCard.bind(this, card)}
+                onTouchTap={this.viewCard.bind(this, card)}
                 style={{cursor:'pointer'}}
-              >{card.name}</li>;
+                primaryText={card.name}/>
             })}
-            {noResultsMsg}
-          </ul>
-        </div>
-        <div style={{float:'right', width:'75%'}}>
-          {this.state.search !== '' && this.state.selectedCard !== '' ? <Card card={this.state.selectedCard}/> : null}
+          </List>
+          <div style={{display:'flex', margin: '8px 16px 8px 0'}}>
+            {this.state.selectedCard.name ? <Card card={this.state.selectedCard}/> : null}
+          </div>
         </div>
       </div>
     );
@@ -78,6 +85,11 @@ Cards.propTypes = {
   cards: PropTypes.array.isRequired,
   isFetching: PropTypes.bool.isRequired,
   dispatch: PropTypes.func.isRequired
+};
+
+Cards.defaultProps = {
+  cards: [],
+  isFetching: false
 };
 
 const mapStateToProps = (state) => {

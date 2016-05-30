@@ -14,21 +14,20 @@ class Decks extends Component {
 
   render() {
     return (
-      <div style={{width:'100%'}}>
-        <div style={{float:'flex'}}>
-          <Paper style={{display:'inline-block', margin: '16px 32px 16px 0'}}>
+      <div style={{width: '100%'}}>
+        <div style={{display:'flex', float:'left'}}>
+          <Paper style={{display:'inline-block', margin: '0 16px 8px 0'}}>
             <Menu>
-              <MenuItem onClick={this.handleNav.bind(this, '/decks/deckBuilder')} primaryText="Build a Deck"/>
-              <MenuItem onClick={this.handleNav.bind(this, '/decks')} primaryText="My Decks"/>
-              <Divider inset={true}/>
+              <MenuItem onTouchTap={this.handleNav.bind(this, '/decks/deckBuilder')} primaryText="Build a Deck"/>
+              <MenuItem onTouchTap={this.handleNav.bind(this, '/decks')} primaryText="My Decks"/>
+              <Divider/>
               <List>
-                <Subheader inset={true}>My Decks</Subheader>
-                <ListItem onClick={this.handleNav.bind(this, '/decks/deck1')} primaryText="Deck 1"/>
+                <ListItem onTouchTap={this.handleNav.bind(this, '/decks/deck1')} primaryText="Deck 1"/>
               </List>
             </Menu>
           </Paper>
         </div>
-        <div style={{display:'flex'}}>
+        <div style={{display:'flex', margin: '8px 16px 8px 0'}}>
           {this.props.children}
         </div>
       </div>

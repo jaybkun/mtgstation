@@ -1,7 +1,8 @@
 import React, {Component, PropTypes} from 'react';
-import {TextField, Toolbar, ToolbarGroup, RaisedButton, List, ListItem} from 'material-ui';
+import {TextField, Toolbar, ToolbarGroup, ToolbarTitle, RaisedButton, List, ListItem, FloatingActionButton} from 'material-ui';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 import {Snackbar, CircularProgress} from 'material-ui';
+import AddIcon from 'material-ui/svg-icons/av/library-add';
 import {fetchCards, clearCards} from '../actions/CardActions';
 import {connect} from 'react-redux';
 import {replaceCost} from '../utils/CostConverter';
@@ -25,6 +26,7 @@ class DeckBuilder extends Component {
     this.removeSelected = this.removeSelected.bind(this);
     this.handleRequestClose = this.handleRequestClose.bind(this);
     this.handleRowSelect = this.handleRowSelect.bind(this);
+    this.saveDeck = this.saveDeck.bind(this);
   }
 
   updateCardSearch(ev, value) {
@@ -42,6 +44,10 @@ class DeckBuilder extends Component {
     this.setState({search: '', selectedCard: ''});
     const {dispatch} = this.props;
     dispatch(clearCards());
+  }
+
+  saveDeck() {
+
   }
 
   handleRowSelect(rows) {
@@ -102,7 +108,16 @@ class DeckBuilder extends Component {
   render() {
     return (
       <div>
-        <h3>Deck Builder</h3>
+        <Toolbar>
+          <ToolbarGroup>
+            <ToolbarTitle text='Deck Builder'/>
+          </ToolbarGroup>
+          <ToolbarGroup>
+            <RaisedButton mini={true} icon={<AddIcon/>}>
+              Save
+            </RaisedButton>
+          </ToolbarGroup>
+        </Toolbar>
         <TextField hintText="Title" />
         <div style={{float:'right'}}>
           <h4>Analysis</h4>
@@ -115,10 +130,10 @@ class DeckBuilder extends Component {
                          hintText='Search by name'
                          value={this.state.search}
                          onChange={this.updateCardSearch}/>
-              <RaisedButton onClick={this.clearSearch}>Clear</RaisedButton>
+              <RaisedButton onTouchTap={this.clearSearch}>Clear</RaisedButton>
             </ToolbarGroup>
             <ToolbarGroup>
-              <RaisedButton onClick={this.removeSelected}>
+              <RaisedButton onTouchTap={this.removeSelected}>
                 Remove
               </RaisedButton>
             </ToolbarGroup>
@@ -126,7 +141,7 @@ class DeckBuilder extends Component {
           {this.props.isFetching ? <CircularProgress /> :
             <List>
               {this.props.cards.map((card, i) => {
-                return <ListItem onClick={this.addCard.bind(this, card)} key={i} primaryText={card.name}/>;
+                return <ListItem onTouchTap={this.addCard.bind(this, card)} key={i} primaryText={card.name}/>;
               })}
             </List>}
         </div>

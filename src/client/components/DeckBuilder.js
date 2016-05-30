@@ -3,8 +3,8 @@ import {
   TextField, IconMenu, IconButton, MenuItem, Toolbar, ToolbarGroup,
   ToolbarSeparator, ToolbarTitle, RaisedButton, List, ListItem
 } from 'material-ui';
-import Add from 'material-ui/svg-icons/content/add';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
+import {Snackbar, CircularProgress} from 'material-ui';
 import {fetchCards, clearCards} from '../actions/CardActions';
 import {connect} from 'react-redux';
 import {replaceCost} from '../utils/CostConverter';
@@ -17,13 +17,16 @@ class DeckBuilder extends Component {
       title: '',
       deckCards: [],
       sideboard: [],
-      search: ''
+      search: '',
+      snackbarOpen: false,
+      message: ''
     };
 
     this.updateCardSearch = this.updateCardSearch.bind(this);
     this.clearSearch = this.clearSearch.bind(this);
     this.addCard = this.addCard.bind(this);
-    this.removeCard = this.removeCard.bind(this);
+    this.removeSelected = this.removeSelected.bind(this);
+    this.handleRequestClose = this.handleRequestClose.bind(this);
   }
 
   updateCardSearch(ev, value) {
@@ -38,17 +41,49 @@ class DeckBuilder extends Component {
   }
 
   clearSearch() {
-    this.setState({search: '', slectedCard: ''});
+    this.setState({search: '', selectedCard: ''});
     const {dispatch} = this.props;
     dispatch(clearCards());
   }
 
   addCard(card) {
-    this.setState({deckCards: [...this.state.deckCards, card]});
+    let isBasicLand = false;
+    card.selected = false;
+
+    // Check if basic land
+    if (card.supertypes) {
+      if (_.includes(card.supertypes, 'basic') && _.includes(card.types, 'land')) {
+        isBasicLand = true;
+      }
+    }
+
+    if (!isBasicLand) {
+      let count = _.filter(this.state.deckCards, {id: card.id}).length;
+      if (count < 4) {
+        this.setState({deckCards: [...this.state.deckCards, card]});
+      } else {
+        this.setState({
+          snackbarOpen: true,
+          message: 'Limit of 4'
+        })
+      }
+    } else {
+      this.setState({deckCards: [...this.state.deckCards, card]});
+    }
   }
 
-  removeCard(card) {
+  removeSelected() {
+    let newDeck = _.filter(this.state.deckCards, card => {
+      return !card.selected;
+    });
+    this.setState({deckCards: newDeck});
+  }
 
+  handleRequestClose() {
+    this.setState({
+      snackbarOpen: false,
+      message: ''
+    });
   }
 
   render() {
@@ -64,49 +99,57 @@ class DeckBuilder extends Component {
         </div>
         <div style={{clear:'right'}}>
           <Toolbar>
-            <ToolbarGroup firstChild={true}>
+            <ToolbarGroup>
               <TextField id='card-search'
                          hintText='Search by name'
                          value={this.state.search}
                          onChange={this.updateCardSearch}/>
-              <RaisedButton
-                onClick={this.clearSearch}>Clear</RaisedButton>
+              <RaisedButton onClick={this.clearSearch}>Clear</RaisedButton>
+            </ToolbarGroup>
+            <ToolbarGroup>
+              <RaisedButton onClick={this.removeSelected}>
+                Remove
+              </RaisedButton>
             </ToolbarGroup>
           </Toolbar>
-          <List>
-            {this.props.cards.map((card, i) => {
-              return <ListItem onClick={this.addCard.bind(this, card)} key={i} primaryText={card.name}/>;
-            })}
-          </List>
-          <div>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHeaderColumn>Name</TableHeaderColumn>
-                  <TableHeaderColumn>Cost</TableHeaderColumn>
-                  <TableHeaderColumn>Type</TableHeaderColumn>
-                  <TableHeaderColumn>Color</TableHeaderColumn>
-                  <TableHeaderColumn>Text</TableHeaderColumn>
-                  <TableHeaderColumn>P/T</TableHeaderColumn>  
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {this.state.deckCards.map((card, i) => {
-                  return (
-                    <TableRow key={card.name + '_' + i}>
-                      <TableRowColumn>{card.name}</TableRowColumn>
-                      <TableRowColumn><div dangerouslySetInnerHTML={replaceCost(card.cost)}/></TableRowColumn>
-                      <TableRowColumn>{card.types}</TableRowColumn>
-                      <TableRowColumn>{card.colors}</TableRowColumn>
-                      <TableRowColumn>{card.text}</TableRowColumn>
-                      <TableRowColumn>{card.power}/{card.toughness}</TableRowColumn>
-                    </TableRow>
-                  );
-                })}
-              </TableBody>
-            </Table>
-          </div>
+          {this.props.isFetching ? <CircularProgress /> :
+            <List>
+              {this.props.cards.map((card, i) => {
+                return <ListItem onClick={this.addCard.bind(this, card)} key={i} primaryText={card.name}/>;
+              })}
+            </List>}
         </div>
+        <Table multiSelectable={true} seletable={true} fixedHeader={true}>
+          <TableHeader>
+            <TableRow>
+              <TableHeaderColumn>Name</TableHeaderColumn>
+              <TableHeaderColumn>Cost</TableHeaderColumn>
+              <TableHeaderColumn>Type</TableHeaderColumn>
+              <TableHeaderColumn>Text</TableHeaderColumn>
+              <TableHeaderColumn>Subtype</TableHeaderColumn>
+              <TableHeaderColumn>P/T</TableHeaderColumn>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {this.state.deckCards.map((card, index) => {
+              return (<TableRow key={index} selected={card.selected}>
+                <TableRowColumn>{card.name}</TableRowColumn>
+                <TableRowColumn><div dangerouslySetInnerHTML={replaceCost(card.cost)}/></TableRowColumn>
+                <TableRowColumn>{card.types}</TableRowColumn>
+                <TableRowColumn><div dangerouslySetInnerHTML={replaceCost(card.text)}/></TableRowColumn>
+                <TableRowColumn>{card.subtypes}</TableRowColumn>
+                <TableRowColumn>{card.power}/{card.toughness}</TableRowColumn>
+              </TableRow>)
+            })}
+          </TableBody>
+        </Table>
+        <Snackbar
+          open={this.state.snackbarOpen}
+          message={this.state.message}
+          autoHideDuration={2000}
+          handleActionTouchTap={this.handleRequestClose}
+          onRequestClose={this.handleRequestClose}
+        />
       </div>
     );
   }

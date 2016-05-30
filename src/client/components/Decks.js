@@ -1,5 +1,5 @@
-import React,{Component,PropTypes} from 'react';
-import {List,ListItem,Divider,Paper,Subheader,Menu,MenuItem} from 'material-ui';
+import React, {Component, PropTypes} from 'react';
+import {List, ListItem, Divider, Paper, Subheader, Menu, MenuItem} from 'material-ui';
 
 class Decks extends Component {
   constructor(props) {
@@ -28,7 +28,9 @@ class Decks extends Component {
             </Menu>
           </Paper>
         </div>
-        {this.props.children}
+        <div style={{float:'left'}}>
+          {this.props.children}
+        </div>
       </div>
     )
   }

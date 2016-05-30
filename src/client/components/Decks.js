@@ -14,8 +14,8 @@ class Decks extends Component {
 
   render() {
     return (
-      <div>
-        <div style={{float:'left'}}>
+      <div style={{width:'100%'}}>
+        <div style={{float:'flex'}}>
           <Paper style={{display:'inline-block', margin: '16px 32px 16px 0'}}>
             <Menu>
               <MenuItem onClick={this.handleNav.bind(this, '/decks/deckBuilder')} primaryText="Build a Deck"/>
@@ -28,7 +28,7 @@ class Decks extends Component {
             </Menu>
           </Paper>
         </div>
-        <div style={{float:'right'}}>
+        <div style={{display:'flex'}}>
           {this.props.children}
         </div>
       </div>

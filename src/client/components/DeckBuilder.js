@@ -1,8 +1,5 @@
 import React, {Component, PropTypes} from 'react';
-import {
-  TextField, IconMenu, IconButton, MenuItem, Toolbar, ToolbarGroup,
-  ToolbarSeparator, ToolbarTitle, RaisedButton, List, ListItem
-} from 'material-ui';
+import {TextField, Toolbar, ToolbarGroup, RaisedButton, List, ListItem} from 'material-ui';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 import {Snackbar, CircularProgress} from 'material-ui';
 import {fetchCards, clearCards} from '../actions/CardActions';
@@ -48,7 +45,6 @@ class DeckBuilder extends Component {
   }
 
   handleRowSelect(rows) {
-    window.console.debug('firing', rows);
     let newDeck = [];
     if (rows === 'all' || rows === 'none') {
       newDeck = this.state.deckCards.map(card => {
@@ -56,8 +52,8 @@ class DeckBuilder extends Component {
         return card;
       });
     } else {
-      newDeck = _.map(this.state.deckCards, ((card, index) => {
-        card.selected = false;
+      newDeck = _.map(this.state.deckCards, ((card, idx) => {
+        card.selected = _.includes(rows, idx);
         return card;
       }));
     }
@@ -67,7 +63,7 @@ class DeckBuilder extends Component {
   addCard(card) {
     let newCard = _.cloneDeep(card);
     let isBasicLand = false;
-    newCard.selected = true;
+    newCard.selected = false;
 
     // Check if basic land
     if (newCard.supertypes) {
@@ -92,9 +88,7 @@ class DeckBuilder extends Component {
   }
 
   removeSelected() {
-    let newDeck = _.filter(this.state.deckCards, card => {
-      return !card.selected;
-    });
+    let newDeck = _.filter(this.state.deckCards, card => { return !card.selected });
     this.setState({deckCards: newDeck});
   }
 
@@ -109,9 +103,7 @@ class DeckBuilder extends Component {
     return (
       <div>
         <h3>Deck Builder</h3>
-        <TextField
-          hintText="Title"
-        />
+        <TextField hintText="Title" />
         <div style={{float:'right'}}>
           <h4>Analysis</h4>
           <div>Size: {this.state.deckCards.length}</div>
@@ -165,6 +157,7 @@ class DeckBuilder extends Component {
             })}
           </TableBody>
         </Table>
+
         <Snackbar
           open={this.state.snackbarOpen}
           message={this.state.message}

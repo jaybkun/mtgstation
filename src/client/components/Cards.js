@@ -1,13 +1,10 @@
 import React, {Component, PropTypes} from 'react';
-import {TextField, RefreshIndicator, RaisedButton} from 'material-ui';
-import ClearIcon from 'material-ui/svg-icons/content/clear';
-import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
+import {TextField} from 'material-ui';
+import {Card, CardHeader, CardText} from 'material-ui/Card';
 import {GridList, GridTile} from 'material-ui/GridList';
-import {List, ListItem} from 'material-ui';
 import {fetchCards, clearCards} from '../actions/CardActions';
 import {connect} from 'react-redux';
 import MtgCard from './Card';
-import {replaceCost} from '../utils/CostConverter';
 
 const styles = {
   root: {
@@ -35,7 +32,7 @@ class Cards extends Component {
 
     this.updateCardSearch = this.updateCardSearch.bind(this);
     this.viewCard = this.viewCard.bind(this);
-    this.hidCard = this.hideCard.bind(this);
+    this.hideCard = this.hideCard.bind(this);
   }
 
   updateCardSearch(ev, value) {
@@ -58,17 +55,6 @@ class Cards extends Component {
   }
 
   render() {
-    let noResultsMsg = null;
-    if (this.props.cards.length === 0 &&
-      this.state.search !== '' && !this.props.isFetching) {
-      noResultsMsg = <ListItem primaryText='No cards match your search'/>
-    }
-
-    let cardDiv = null;
-    if (this.state.selectedCard !== {}) {
-      cardDiv = <Card card={this.state.selectedCard}/>
-    }
-
     return (
       <div style={{width: '100%'}}>
         <div style={{margin: '16px 32px'}}>
@@ -94,7 +80,7 @@ class Cards extends Component {
             </CardText>
           </Card>
           <div style={{margin:'16px 0'}}>
-            {this.state.selectedCard !== {} ? <MtgCard card={this.state.selectedCard}/> : null}
+            {typeof this.state.selectedCard !== 'undefined' ? <MtgCard card={this.state.selectedCard}/> : null}
           </div>
         </div>
       </div>

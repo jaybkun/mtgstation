@@ -13,7 +13,9 @@ class Card extends Component {
   }
 
   componentWillReceiveProps(props) {
-    this.setState({selectedEdition: props.card.editions.length - 1});
+    if (props && props.card) {
+      this.setState({selectedEdition: props.card.editions.length - 1});
+    }
   }
 
   handleEditionChange(ev, idx, value) {
@@ -63,7 +65,8 @@ class Card extends Component {
           <div>
             <div style={{display:'flex'}}>
               <div style={{float:'left', margin: '0 16px 0 0'}}>{this.props.card.name}</div>
-              <div style={{float:'left', margin: '0 16px 0 0'}} dangerouslySetInnerHTML={replaceCost(this.props.card.cost)}/>
+              <div style={{float:'left', margin: '0 16px 0 0'}}
+                   dangerouslySetInnerHTML={replaceCost(this.props.card.cost)}/>
             </div>
             <div>
               {supertypes}

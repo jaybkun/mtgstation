@@ -28,7 +28,7 @@ class Decks extends Component {
           </Paper>
         </div>
         <div style={{display:'flex', margin: '8px 16px 8px 0'}}>
-          {this.props.children}
+          {this.props.children ? this.props.children : <div style={{textAlign:'center'}}>Coming Feature Soon</div>}
         </div>
       </div>
     )

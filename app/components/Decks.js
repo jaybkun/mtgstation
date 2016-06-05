@@ -36,12 +36,12 @@ class Decks extends Component {
   }
 }
 
-Decks.contextTypes = {
-  router: PropTypes.object.isRequired
-};
-
 Decks.propTypes = {
   children: PropTypes.node.isRequired
+};
+
+Decks.contextTypes = {
+  router: PropTypes.object.isRequired
 };
 
 export default Decks;

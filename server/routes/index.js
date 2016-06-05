@@ -1,9 +1,9 @@
-import express from 'express';
+const express  = require('express');
 const router = express.Router();
 
-import Card from '../models/Card';
-import Deck from '../models/Deck';
-import User from '../models/User';
+const Card  = require('../models/Card');
+const Deck = require('../models/Deck');
+const User = require('../models/User');
 
 router.get('/cards/:card', function (req, res) {
   const card = req.params.card;
@@ -48,8 +48,6 @@ router.get('/decks/', function (req, res) {
 });
 
 router.post('/decks/', function (req, res) {
-  console.log(req.body);
-
   const deck = new Deck(req.body);
   deck.save()
     .then(d => {

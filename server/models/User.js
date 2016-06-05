@@ -1,5 +1,5 @@
-import bluebird from 'bluebird';
-import mongoose from 'mongoose';
+const bluebird = require('bluebird');
+const mongoose = require('mongoose');
 bluebird.promisifyAll(mongoose);
 const Schema = mongoose.Schema;
 
@@ -10,4 +10,4 @@ const UserSchema = new Schema({
 
 const UserModel = mongoose.model('User', UserSchema);
 
-export default UserModel;
+module.exports = UserModel;

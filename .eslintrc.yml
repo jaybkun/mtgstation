@@ -20,9 +20,5 @@ extends:
   - plugin:react/recommended
 
 rules:
-  console:
-    - warn
-    - allow:
-      - warn
-      - error
+  console: off
   react/no-danger: off

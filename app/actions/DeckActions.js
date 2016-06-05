@@ -50,12 +50,11 @@ export const saveDeck = (deck) => {
   return (dispatch) => {
     dispatch(requestSaveDeck(deck));
 
-    let uri = 'http://localhost:3000/api/decks';
+    let uri = 'http://localhost/api/decks';
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
     return fetch(uri, {
       method: 'POST',
-      mode: 'no-cors',
       headers: headers,
       body: JSON.stringify(deck)
     })
@@ -70,7 +69,7 @@ export const getDecks = () => {
   return (dispatch) => {
     dispatch(requestDecks());
 
-    let uri = 'http://localhost:3000/api/decks';
+    let uri = 'http://localhost/api/decks';
     return fetch(uri)
       .then(response => response.json())
       .then(decks => {
@@ -83,7 +82,7 @@ export const getDeck = (deck) => {
   return (dispatch) => {
     dispatch(requestDeck(deck));
 
-    let uri = 'http://localhost:3000/api/decks/' + deck;
+    let uri = 'http://localhost/api/decks/' + deck;
     return fetch(uri)
       .then(response => response.json())
       .then(deck => {

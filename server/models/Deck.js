@@ -1,5 +1,5 @@
-import bluebird from 'bluebird';
-import mongoose from 'mongoose';
+const bluebird = require('bluebird');
+const mongoose = require('mongoose');
 bluebird.promisifyAll(mongoose);
 const Schema = mongoose.Schema;
 
@@ -13,4 +13,4 @@ const DeckSchema = new Schema({
 
 const DeckModel = mongoose.model('Deck', DeckSchema);
 
-export default DeckModel;
+module.exports = DeckModel;

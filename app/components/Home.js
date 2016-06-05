@@ -41,7 +41,6 @@ class Home extends Component {
 }
 
 Home.contextTypes = {
-  children: PropTypes.node.isRequired,
   router: PropTypes.object.isRequired
 };
 

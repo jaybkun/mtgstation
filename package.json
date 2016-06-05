@@ -12,14 +12,13 @@
     "npm": "^3.0.0"
   },
   "scripts": {
-    "lint": "eslint src",
+    "start": "nodemon --watch server --watch public --watch server.js server.js",
     "test": "jest",
+    "lint": "eslint src",
     "clean": "rimraf ./dist",
-    "start": "node dev-server.js",
     "prebuild": "npm run clean",
     "build": "cross-env NODE_ENV=production webpack -d --config webpack.dist --progress --colors",
-    "server": "babel-node src/server/server.js",
-    "prod": "npm run build & forever src/server/server.js"
+    "prod": "npm run build & forever server.js"
   },
   "keywords": [
     "mtg",
@@ -37,6 +36,7 @@
     "d3": "^3.5.17",
     "express": "^4.13.4",
     "font-awesome": "^4.6.3",
+    "http-proxy": "^1.13.3",
     "isomorphic-fetch": "^2.2.1",
     "keymirror": "^0.1.1",
     "lodash": "^4.13.1",
@@ -66,13 +66,14 @@
     "chai": "^3.5.0",
     "cross-env": "^1.0.8",
     "css-loader": "^0.23.1",
-    "eslint": "^2.11.0",
+    "eslint": "^2.11.1",
     "eslint-loader": "^1.3.0",
     "eslint-plugin-react": "^5.1.1",
     "file-loader": "^0.8.5",
     "image-webpack-loader": "^1.8.0",
     "jest": "^12.1.1",
     "node-sass": "^3.7.0",
+    "nodemon": "^1.9.2",
     "react-addons-test-utils": "^15.1.0",
     "react-hot-loader": "^1.3.0",
     "redux-devtools": "^3.3.1",

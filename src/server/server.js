@@ -5,6 +5,7 @@ import logger from 'morgan';
 import http from 'http';
 import bluebird from 'bluebird';
 import mongoose from 'mongoose';
+import bodyParser from 'body-parser';
 import routes from './routes';
 bluebird.promisifyAll(mongoose);
 
@@ -18,6 +19,11 @@ app.set('view engine', 'pug');
 
 app.use(logger('dev'));
 app.use(favicon(path.join(__dirname, '../client/favicon.ico')));
+
+// handle application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({extended:false}));
+// handle application/json
+app.use(bodyParser.json());
 
 app.use('/dist/', express.static(path.join(__dirname, '../../dist/')));
 app.use('/images/', express.static(path.join(__dirname, '../client/images')));

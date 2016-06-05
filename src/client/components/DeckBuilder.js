@@ -12,6 +12,7 @@ import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColu
 import {Snackbar, CircularProgress} from 'material-ui';
 import AddIcon from 'material-ui/svg-icons/av/library-add';
 import {fetchCards, clearCards} from '../actions/CardActions';
+import {saveDeck} from '../actions/DeckActions';
 import {connect} from 'react-redux';
 import {replaceCost} from '../utils/CostConverter';
 import * as _ from 'lodash';
@@ -22,7 +23,7 @@ class DeckBuilder extends Component {
     super(props);
 
     this.state = {
-      title: '',
+      name: '',
       deckCards: [],
       sideboard: [],
       search: '',
@@ -66,6 +67,7 @@ class DeckBuilder extends Component {
     this.handleRowSelect = this.handleRowSelect.bind(this);
     this.saveDeck = this.saveDeck.bind(this);
     this.updateAnalysis = this.updateAnalysis.bind(this);
+    this.handleNameChange = this.handleNameChange.bind(this);
   }
 
   updateCardSearch(ev, value) {
@@ -85,8 +87,14 @@ class DeckBuilder extends Component {
     dispatch(clearCards());
   }
 
+  handleNameChange(ev, value) {
+    this.setState({name: value});
+  }
+
   saveDeck() {
-    this.setState({snackbarOpen: true, message: 'Save not implemented yet'});
+    //this.setState({snackbarOpen: true, message: 'Save not implemented yet'});
+    const {dispatch} = this.props;
+    dispatch(saveDeck({name:this.state.name}));
   }
 
   updateAnalysis() {
@@ -307,7 +315,7 @@ class DeckBuilder extends Component {
       <div>
         <Toolbar>
           <ToolbarGroup>
-            <TextField hintText="Title"/>
+            <TextField hintText="Name" value={this.state.name} onChange={this.handleNameChange}/>
           </ToolbarGroup>
           <ToolbarGroup>
             <RaisedButton

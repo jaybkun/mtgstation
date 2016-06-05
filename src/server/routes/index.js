@@ -47,6 +47,20 @@ router.get('/decks/', function (req, res) {
     });
 });
 
+router.post('/decks/', function (req, res) {
+  console.log(req.body);
+
+  const deck = new Deck(req.body);
+  deck.save()
+    .then(d => {
+      res.status(200).json(d);
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+});
+
 router.get('/users/:user', function (req, res) {
   const user = req.params.user;
   User.find({name:user})

@@ -19,8 +19,8 @@ class Decks extends Component {
         <div style={{display:'flex', float:'left'}}>
           <Paper style={{display:'inline-block', margin: '0 16px 8px 0'}}>
             <Menu>
-              <MenuItem onTouchTap={this.handleNav.bind(this, '/decks/deckBuilder')} primaryText="Build a Deck"/>
               <MenuItem onTouchTap={this.handleNav.bind(this, '/decks')} primaryText="My Decks"/>
+              <MenuItem onTouchTap={this.handleNav.bind(this, '/decks/deckBuilder')} primaryText="Build a Deck"/>
               <Divider/>
               <List>
                 <ListItem onTouchTap={this.handleNav.bind(this, '/decks/deck1')} primaryText="Deck 1"/>

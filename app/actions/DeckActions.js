@@ -45,16 +45,16 @@ export const requestDeck = (deck) => {
 
 // Thunk
 export const saveDeck = (deck) => {
-  window.console.debug(JSON.stringify(deck));
-
   return (dispatch) => {
     dispatch(requestSaveDeck(deck));
 
-    let uri = 'http://localhost/api/decks';
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return fetch(uri, {
+    headers.append('Accept', 'application/json');
+    return fetch('/api/decks', {
       method: 'POST',
+      mode: 'cors',
+      cache: 'default',
       headers: headers,
       body: JSON.stringify(deck)
     })
@@ -68,9 +68,7 @@ export const saveDeck = (deck) => {
 export const getDecks = () => {
   return (dispatch) => {
     dispatch(requestDecks());
-
-    let uri = 'http://localhost/api/decks';
-    return fetch(uri)
+    return fetch('/api/decks')
       .then(response => response.json())
       .then(decks => {
         dispatch(receiveDecks(decks))
@@ -82,8 +80,7 @@ export const getDeck = (deck) => {
   return (dispatch) => {
     dispatch(requestDeck(deck));
 
-    let uri = 'http://localhost/api/decks/' + deck;
-    return fetch(uri)
+    return fetch('/api/decks')
       .then(response => response.json())
       .then(deck => {
         dispatch(receiveDecks(deck));

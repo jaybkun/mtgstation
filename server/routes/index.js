@@ -48,6 +48,7 @@ router.get('/decks/', function (req, res) {
 });
 
 router.post('/decks/', function (req, res) {
+  console.log(req.body);
   const deck = new Deck(req.body);
   deck.save()
     .then(d => {

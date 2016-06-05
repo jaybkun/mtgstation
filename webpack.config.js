@@ -8,6 +8,8 @@ const cssLoader = require('./webpack.loaders.config').cssLoader;
 const imageLoader = require('./webpack.loaders.config').imageLoader;
 const woffLoader = require('./webpack.loaders.config').woffLoader;
 const fontLoader = require('./webpack.loaders.config').fontLoader;
+const yamlLoader = require('./webpack.loaders.config').yamlLoader;
+const jsonLoader = require('./webpack.loaders.config').jsonLoader;
 
 const appEntry = path.resolve(__dirname, 'app', 'app.entry');
 const buildPath = path.resolve(__dirname, 'public', 'dist');
@@ -43,7 +45,9 @@ module.exports = {
       cssLoader,
       imageLoader,
       woffLoader,
-      fontLoader
+      fontLoader,
+      yamlLoader,
+      jsonLoader
     ]
   }
 };

@@ -27,7 +27,8 @@ app.use(express.static(publicPath));
 app.use(bodyParser.urlencoded({extended:false}));
 // handle application/json
 app.use(bodyParser.json());
-app.all('/api', routes);
+
+app.use('/api', routes);
 
 if (!isProduction) {
   const bundle = require('./server/bundle');

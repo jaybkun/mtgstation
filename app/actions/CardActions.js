@@ -1,5 +1,6 @@
 import keyMirror from 'keymirror';
 import fetch from 'isomorphic-fetch';
+import config from '../../config.yml';
 
 export const CardActions = keyMirror({
   REQUEST_CARDS: null,
@@ -35,7 +36,7 @@ export const fetchCards = (card) => {
   return (dispatch) => {
     dispatch(requestCards(card));
 
-    let uri = 'https://api.deckbrew.com/mtg/cards?name=' + card;
+    let uri = config.mtgCardRepo + '/cards?name=' + card;
     return fetch(uri)
       .then(response => response.json())
       .then(cards => {

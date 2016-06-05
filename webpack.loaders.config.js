@@ -30,6 +30,16 @@ const imageLoader = {
   ]
 };
 
+const jsonLoader = {
+  test: /\.json$/i,
+  loader: "json"
+};
+
+const yamlLoader = {
+  test: /\.ya?ml$/i,
+  loaders: ['json', 'yaml']
+};
+
 const woffLoader = {
   test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
   loader: "url-loader?limit=10000&minetype=application/font-woff"
@@ -52,5 +62,7 @@ module.exports = {
   imageLoader: imageLoader,
   woffLoader: woffLoader,
   fontLoader: fontLoader,
-  cssLoader: cssLoader
+  cssLoader: cssLoader,
+  jsonLoader: jsonLoader,
+  yamlLoader: yamlLoader
 };

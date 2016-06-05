@@ -37,7 +37,7 @@ class Decks extends Component {
 }
 
 Decks.propTypes = {
-  children: PropTypes.node.isRequired
+  children: PropTypes.node
 };
 
 Decks.contextTypes = {

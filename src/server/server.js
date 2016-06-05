@@ -1,14 +1,11 @@
-import express from 'express';
-import path from 'path';
-import favicon from 'serve-favicon';
-import logger from 'morgan';
-import http from 'http';
-import bluebird from 'bluebird';
-import mongoose from 'mongoose';
-import bodyParser from 'body-parser';
-import routes from './routes';
-bluebird.promisifyAll(mongoose);
-
+const express = require('express');
+const path = require('path');
+const favicon = require('serve-favicon');
+const logger = require('morgan');
+const http = require('http');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const routes = require('./routes');
 const app = express();
 
 mongoose.connect('mongodb://localhost/mtgstation');

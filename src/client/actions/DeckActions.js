@@ -55,7 +55,7 @@ export const saveDeck = (deck) => {
     headers.append('Content-Type', 'application/json');
     return fetch(uri, {
       method: 'POST',
-      mode: 'cors',
+      mode: 'no-cors',
       headers: headers,
       body: JSON.stringify(deck)
     })
@@ -70,7 +70,7 @@ export const getDecks = () => {
   return (dispatch) => {
     dispatch(requestDecks());
 
-    let uri = 'localhost:3000/api/decks';
+    let uri = 'http://localhost:3000/api/decks';
     return fetch(uri)
       .then(response => response.json())
       .then(decks => {
@@ -80,15 +80,14 @@ export const getDecks = () => {
 };
 
 export const getDeck = (deck) => {
-  /*
-   return (dispatch) => {
-   dispatch(requestCards(card));
+  return (dispatch) => {
+    dispatch(requestDeck(deck));
 
-   let uri = 'https://api.deckbrew.com/mtg/cards?name=' + card;
-   return fetch(uri)
-   .then(response => response.json())
-   .then(cards => {
-   dispatch(receiveCards(card, cards));
-   });
-   };*/
+    let uri = 'http://localhost:3000/api/decks/' + deck;
+    return fetch(uri)
+      .then(response => response.json())
+      .then(deck => {
+        dispatch(receiveDecks(deck));
+      });
+  };
 };

@@ -94,7 +94,7 @@ class DeckBuilder extends Component {
   saveDeck() {
     //this.setState({snackbarOpen: true, message: 'Save not implemented yet'});
     const {dispatch} = this.props;
-    dispatch(saveDeck({name:this.state.name}));
+    dispatch(saveDeck({name:this.state.name, cards: this.state.deckCards}));
   }
 
   updateAnalysis() {
@@ -403,11 +403,11 @@ class DeckBuilder extends Component {
               return (<TableRow key={index} selected={card.selected}>
                 <TableRowColumn>{card.name}</TableRowColumn>
                 <TableRowColumn>
-                  {replaceCost(card.cost)}
+                  <div dangerouslySetInnerHTML={replaceCost(card.cost)}></div>
                 </TableRowColumn>
                 <TableRowColumn>{card.types}</TableRowColumn>
                 <TableRowColumn>
-                  {replaceCost(card.text)}
+                  <div dangerouslySetInnerHTML={replaceCost(card.text)}></div>
                 </TableRowColumn>
                 <TableRowColumn>{card.subtypes}</TableRowColumn>
                 <TableRowColumn>{card.power}/{card.toughness}</TableRowColumn>

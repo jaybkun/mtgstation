@@ -20,4 +20,9 @@ extends:
   - plugin:react/recommended
 
 rules:
-  no-danger: off
+  console:
+    - warn
+    - allow:
+      - warn
+      - error
+  react/no-danger: off

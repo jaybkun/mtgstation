@@ -48,7 +48,7 @@ const cssLoader = {
 
 
 module.exports = {
-  devtool: 'sourc-map',
+  devtool: 'eval',
   entry: {
     mtgstation: [
       'babel-polyfill',

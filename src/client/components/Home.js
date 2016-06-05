@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {Component,PropTypes} from 'react';
 import {Paper} from 'material-ui';
-import {replaceCost} from '../utils/CostConverter';
 
 class Home extends Component {
   constructor(props) {

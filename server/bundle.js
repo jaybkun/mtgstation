@@ -29,7 +29,7 @@ module.exports = function() {
     }
   });
 
-  bundler.listen(3001, 'localhost', () => {
+  bundler.listen(8080, 'localhost', () => {
     console.log('Bundling mtgStation, please wait...');
   });
 };

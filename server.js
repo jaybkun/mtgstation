@@ -35,7 +35,7 @@ if (!isProduction) {
 
   app.all('/dist/*', (req, res) => {
     proxy.web(req, res, {
-      target: 'http://localhost:3001'
+      target: 'http://localhost:8080'
     });
   });
 }

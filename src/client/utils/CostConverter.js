@@ -4,32 +4,32 @@ export const replaceCost = (text) => {
     return null;
   }
 
-  const whiteRx = new RegExp(/{w}/ig);
+  const whiteRx = /\{w}/ig;
   text = text.replace(whiteRx, '<img height=\'' + height + '\' src=\'../images/white_mana.png\'/>');
 
-  const blueRx = new RegExp(/{u}/ig);
+  const blueRx = /\{u}/ig;
   text = text.replace(blueRx, '<img height=\'' + height + '\' src=\'../images/blue_mana.png\'/>');
 
-  const blackRx = new RegExp(/{b}/ig);
+  const blackRx = /\{b}/ig;
   text = text.replace(blackRx, '<img height=\'' + height + '\' src=\'../images/black_mana.png\'/>');
 
-  const redRx = new RegExp(/{r}/ig);
+  const redRx = /\{r}/ig;
   text = text.replace(redRx, '<img height=\'' + height + '\' src=\'../images/red_mana.png\'/>');
 
-  const greenRx = new RegExp(/{g}/ig);
+  const greenRx = /\{g}/ig;
   text = text.replace(greenRx, '<img height=\'' + height + '\' src=\'../images/green_mana.png\'/>');
 
-  const devoidRx = new RegExp(/{c}/ig);
+  const devoidRx = /\{c}/ig;
   text = text.replace(devoidRx, '<img height=\'' + height + '\' src=\'../images/devoid_mana.png\'/>');
 
-  const xmanaRx = new RegExp(/{x}/ig);
+  const xmanaRx = /\{x}/ig;
   text = text.replace(xmanaRx, '<img height=\'' + height + '\' src=\'../images/x_mana.png\'/>');
 
-  const tapRx = new RegExp(/{t}/ig);
+  const tapRx = /\{t}/ig;
   text = text.replace(tapRx, '<img height=\'' + height + '\' src=\'../images/tap.png\'/>');
 
-  const colorlessRxAll = new RegExp(/{(\d+)}/g);
-  const colorlessRx = new RegExp(/{(\d+)}/);
+  const colorlessRxAll = /\{(\d+)}/g;
+  const colorlessRx = /\{(\d+)}/;
   if (colorlessRxAll.test(text)) {
     let colorlessCost = text.match(colorlessRxAll);
     for (let match of colorlessCost) {

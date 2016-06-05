@@ -1,5 +1,6 @@
-import React, {Component, PropTypes} from 'react';
-import {List, ListItem, Divider, Paper, Subheader, Menu, MenuItem} from 'material-ui';
+import * as React from 'react';
+import {Component, PropTypes} from 'react';
+import {List, ListItem, Divider, Paper, Menu, MenuItem} from 'material-ui';
 
 class Decks extends Component {
   constructor(props) {
@@ -39,6 +40,8 @@ Decks.contextTypes = {
   router: PropTypes.object.isRequired
 };
 
-Decks.propTypes = {};
+Decks.propTypes = {
+  children: PropTypes.node.isRequired
+};
 
 export default Decks;

@@ -1,30 +1,27 @@
-const express = require('express');
-const path = require('path');
-const favicon = require('serve-favicon');
-const logger = require('morgan');
-const bodyParser = require('body-parser');
-const http = require('http');
-
-const routes = require('./routes');
+import express from 'express';
+import path from 'path';
+import favicon from 'serve-favicon';
+import logger from 'morgan';
+import http from 'http';
+import bluebird from 'bluebird';
+import mongoose from 'mongoose';
+import routes from './routes';
+bluebird.promisifyAll(mongoose);
 
 const app = express();
+
+mongoose.connect('mongodb://localhost/mtgstation');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
 app.use(favicon(path.join(__dirname, '../client/favicon.ico')));
 
 app.use('/dist/', express.static(path.join(__dirname, '../../dist/')));
 app.use('/images/', express.static(path.join(__dirname, '../client/images')));
-app.use('/api', function(req, res, next) {
-  // TODO handle api calls
-  console.log(req.url);
-  next();
-});
+app.use('/api', routes);
 app.get('*', function(req, res) {
   res.render('index');
 });

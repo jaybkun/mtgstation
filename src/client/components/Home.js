@@ -1,5 +1,7 @@
-import React, {Component,PropTypes} from 'react';
+import * as React from 'react';
+import {Component,PropTypes} from 'react';
 import {Paper} from 'material-ui';
+import {replaceCost} from '../utils/CostConverter';
 
 class Home extends Component {
   constructor(props) {
@@ -40,6 +42,7 @@ class Home extends Component {
 }
 
 Home.contextTypes = {
+  children: PropTypes.node.isRequired,
   router: PropTypes.object.isRequired
 };
 

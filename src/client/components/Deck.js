@@ -1,5 +1,6 @@
-import React,{Component,PropTypes} from 'react';
-import {Toolbar, ToolbarGroup,ToolbarSeparator, ToolbarTitle} from 'material-ui';
+import * as React from 'react';
+import {Component,PropTypes} from 'react';
+
 class Deck extends Component {
   constructor(props) {
     super(props);
@@ -8,7 +9,7 @@ class Deck extends Component {
   render() {
     return (
       <div>
-        <h3>{this.props.title}</h3>
+        <h3>{this.props.deck.title}</h3>
         <div>
           Cards
         </div>

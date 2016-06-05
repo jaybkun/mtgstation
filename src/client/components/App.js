@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react'
+import * as React from 'react';
+import {Component, PropTypes} from 'react';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {AppBar, Drawer, MenuItem, Subheader, Divider} from 'material-ui';
@@ -56,6 +57,8 @@ App.contextTypes = {
   router: PropTypes.object.isRequired
 };
 
-App.propTypes = {};
+App.propTypes = {
+  children: PropTypes.node.isRequired
+};
 
 export default App;

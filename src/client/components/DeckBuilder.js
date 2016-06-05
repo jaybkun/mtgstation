@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react';
+import * as React from 'react';
+import {Component, PropTypes} from 'react';
 import {
   TextField,
   Toolbar,
@@ -13,7 +14,8 @@ import AddIcon from 'material-ui/svg-icons/av/library-add';
 import {fetchCards, clearCards} from '../actions/CardActions';
 import {connect} from 'react-redux';
 import {replaceCost} from '../utils/CostConverter';
-import d3 from 'd3';
+import * as _ from 'lodash';
+//import d3 from 'd3';
 
 class DeckBuilder extends Component {
   constructor(props) {
@@ -257,7 +259,7 @@ class DeckBuilder extends Component {
       }));
     }
     this.setState({deckCards: newDeck});
-  };
+  }
 
   addCard(card) {
     let newCard = _.cloneDeep(card);
@@ -393,11 +395,11 @@ class DeckBuilder extends Component {
               return (<TableRow key={index} selected={card.selected}>
                 <TableRowColumn>{card.name}</TableRowColumn>
                 <TableRowColumn>
-                  <div dangerouslySetInnerHTML={replaceCost(card.cost)}/>
+                  {replaceCost(card.cost)}
                 </TableRowColumn>
                 <TableRowColumn>{card.types}</TableRowColumn>
                 <TableRowColumn>
-                  <div dangerouslySetInnerHTML={replaceCost(card.text)}/>
+                  {replaceCost(card.text)}
                 </TableRowColumn>
                 <TableRowColumn>{card.subtypes}</TableRowColumn>
                 <TableRowColumn>{card.power}/{card.toughness}</TableRowColumn>

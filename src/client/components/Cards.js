@@ -1,8 +1,11 @@
-import React, {Component, PropTypes} from 'react';
+import * as React from 'react';
+import {Component, PropTypes} from 'react';
 import {TextField} from 'material-ui';
 import {Card, CardHeader, CardText} from 'material-ui/Card';
 import {GridList, GridTile} from 'material-ui/GridList';
 import {fetchCards, clearCards} from '../actions/CardActions';
+import RaisedButton from 'material-ui/RaisedButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
 import {connect} from 'react-redux';
 import MtgCard from './Card';
 
@@ -82,6 +85,13 @@ class Cards extends Component {
           <div style={{margin:'16px 0'}}>
             {typeof this.state.selectedCard !== 'undefined' ? <MtgCard card={this.state.selectedCard}/> : null}
           </div>
+          {typeof this.state.selectedCard !== 'undefined' ? <div>
+            <RaisedButton
+              label='Add To My Library'
+              icon={<ContentAdd/>}
+            />
+          </div>
+            : null}
         </div>
       </div>
     );

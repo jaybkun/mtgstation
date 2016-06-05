@@ -1,11 +1,13 @@
+import bluebird from 'bluebird';
 import mongoose from 'mongoose';
+bluebird.promisifyAll(mongoose);
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
-  name: String,
-  image: String,
-  decks: [{type: Schema.Types.ObjectId}],
-  cards: [{type: Schema.Types.ObjectId}]
+  name: {type: String, required: true},
+  image: String
 });
 
-export default UserSchema;
+const UserModel = mongoose.model('User', UserSchema);
+
+export default UserModel;

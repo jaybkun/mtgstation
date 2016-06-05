@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react';
+import * as React from 'react';
+import {Component, PropTypes} from 'react';
 import {SelectField, MenuItem} from 'material-ui';
 import {replaceCost} from '../utils/CostConverter';
 
@@ -18,7 +19,7 @@ class Card extends Component {
     }
   }
 
-  handleEditionChange(ev, idx, value) {
+  handleEditionChange(ev, idx) {
     this.setState({selectedEdition: idx});
   }
 
@@ -65,8 +66,7 @@ class Card extends Component {
           <div>
             <div style={{display:'flex'}}>
               <div style={{float:'left', margin: '0 16px 0 0'}}>{this.props.card.name}</div>
-              <div style={{float:'left', margin: '0 16px 0 0'}}
-                   dangerouslySetInnerHTML={replaceCost(this.props.card.cost)}/>
+              <div style={{float:'left', margin: '0 16px 0 0'}}><div dangerouslySetInnerHTML={replaceCost(this.props.card.cost)}></div></div>
             </div>
             <div>
               {supertypes}
@@ -80,7 +80,7 @@ class Card extends Component {
             </div>
 
             <div style={{boxShadow:'1px 1px 3px #555 inset',padding:'3px'}}>
-              <div dangerouslySetInnerHTML={replaceCost(this.props.card.text)}/>
+              <div dangerouslySetInnerHTML={replaceCost(this.props.card.text)}></div>
               <br/>
               {this.props.card.editions ? <div><span
                 style={{fontStyle:'italic'}}>{this.props.card.editions[this.state.selectedEdition].flavor}</span>
@@ -105,8 +105,11 @@ Card.propTypes = {
     cmc: PropTypes.number.isRequired,
     cost: PropTypes.string,
     text: PropTypes.string,
+    power: PropTypes.string,
+    toughness: PropTypes.string,
     editions: PropTypes.arrayOf(PropTypes.shape({
       set: PropTypes.string.isRequired,
+      set_id: PropTypes.string.isRequired,
       rarity: PropTypes.string.isRequired,
       multiverse_id: PropTypes.number.isRequired,
       number: PropTypes.string.isRequired,
@@ -125,6 +128,8 @@ Card.defaultProps = {
     cmc: 0,
     cost: '',
     text: '',
+    power: '',
+    toughness: '',
     editions: [{
       set: '',
       rarity: '',

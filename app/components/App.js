@@ -42,6 +42,7 @@ class App extends Component {
             <Divider />
             <MenuItem onTouchTap={this.handleNav.bind(this, '/cards')}>Search Cards</MenuItem>
             <MenuItem onTouchTap={this.handleNav.bind(this, '/decks')}>Your Decks</MenuItem>
+            <MenuItem onTouchTap={this.handleNav.bind(this, '/library')}>Your Library</MenuItem>
             <Divider />
             <MenuItem onTouchTap={this.handleNav.bind(this, '/about')}>About</MenuItem>
           </Drawer>
